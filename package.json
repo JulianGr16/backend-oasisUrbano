@@ -2,11 +2,20 @@
   "name": "backend-oasisurbano",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["base de datos", "mongoDB", "ExpressJS", "middlewares"],
-  "author": "Julian Garay, Facundo Martinez, Eugenia Sansierra, Victoria Gramajo, Mariana Mendoza, Ismael Vargas", 
+  "keywords": [
+    "base de datos",
+    "mongoDB",
+    "ExpressJS",
+    "middlewares"
+  ],
+  "author": "Julian Garay, Facundo Martinez, Eugenia Sansierra, Victoria Gramajo, Mariana Mendoza, Ismael Vargas",
   "license": "ISC",
-  "description": "Backend para el proyecto final Oasis Urbano, pagina de hotel"
+  "description": "Backend para el proyecto final Oasis Urbano, pagina de hotel",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
