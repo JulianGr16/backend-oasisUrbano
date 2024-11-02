@@ -13,10 +13,13 @@
     "ExpressJS",
     "middlewares"
   ],
-  "author": "Julian Garay, Facundo Martinez, Eugenia Sansierra, Victoria Gramajo, Mariana Mendoza, Ismael Vargas",
+  "author": "Julian Garay, Facundo Martinez, Eugenia Sansierra,Ismael Vargas",
   "license": "ISC",
   "description": "Backend para el proyecto final Oasis Urbano, pagina de hotel",
   "dependencies": {
-    "express": "^4.21.1"
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.0",
+    "morgan": "^1.10.0"
   }
 }
