@@ -71,3 +71,19 @@ export const borrarHabitacion = async (req, res) => {
       .json({ mensaje: "Ocurrio un error no se pudo borrar la habitacion" });
   }
 };
+
+export const obtenerHabitacion = async (req, res) => {
+  try {
+    const habitacionBuscada = await Habitacion.findById(req.params.id);
+    if (!habitacionBuscada) {
+      return res
+        .status(404)
+        .json({ mensaje: "La habitacion no fue encontrada" });
+    }
+    res.status(200).json(habitacionBuscada);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Ocurrio un error no se pudo borrar la habitacion" });
+  }
+};
