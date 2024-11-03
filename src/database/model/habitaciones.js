@@ -3,14 +3,14 @@ import mongoose, { Schema } from "mongoose";
 const habitacionSchema = new Schema({
   numero: {
     type: Number,
-    required: true,
+    required: [true, 'El número de la habitación es obligatorio'],
     min: 1,
     max: 1000,
     unique: true,
   },
   tipo: {
     type: String,
-    required: true,
+    required:[true, 'El tipo de habitación es obligatorio'],
     enum: ["Suite Standard", "Suite Junior", "Suite Premium"],
   },
   precio: {
@@ -34,8 +34,8 @@ const habitacionSchema = new Schema({
       validator: (valor) => {
         return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/.test(valor);
       },
-    },
-  },
+    }
+  }
 });
 
 const Habitacion = mongoose.model("habitacion", habitacionSchema);
