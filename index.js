@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import './src/database/dbConnection.js'
 import habitacionRouter from './src/routes/habitaciones.routes.js';
+import usuarioRouter from './src/routes/usuarios.routes.js'
 
 //1-configurar un puerto
 const app = express();
@@ -25,3 +26,4 @@ app.use(express.static(path.join(__dirname,'/public')))
 //3-configurar las rutas
 // http://localhost:4000/prueba
 app.use('/api',habitacionRouter)
+app.use('/api',usuarioRouter)
