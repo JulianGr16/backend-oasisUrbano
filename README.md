@@ -25,3 +25,5 @@ Git clone https://github.com/JulianGr16/backend-oasisUrbano.git
 - Julian Garay [perfil de GitHub](https://github.com/JulianGr16).
 - Facundo Martinez [perfil de GitHub](https://github.com/facu030).
 - Ismael Vargas [perfil de GitHub](https://github.com/joseismaelvargas).
+
+
