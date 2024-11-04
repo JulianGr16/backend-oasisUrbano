@@ -100,7 +100,20 @@ export const Login = async (req, res) =>{
       .status(400)
       .json({mensaje: "Correo o contraseña incorrecta!"});
     }
-  } catch (error) {
+        // generar un token
+        const token = await generarJWT(usuarioExistente._id, usuarioExistente.email)
+        // respodemos afirmativamente
+        res.status(200).json({
+          mensaje: 'Los datos del usuario son validos',
+          token,
+          id: usuarioExistente._id
+        })
     
+  } catch (error) {
+    {
+      res
+        .status(500)
+        .json({ mensaje: "Ocurrio un error al intentar logearse!" });
+    }
   }
 }
