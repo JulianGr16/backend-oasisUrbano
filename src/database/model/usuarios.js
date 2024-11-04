@@ -35,6 +35,14 @@ const usuarioSchema = new mongoose.Schema({
       message: "Debe ingresar un correo electrónico válido",
     },
   },
+  roll: {
+    type:String,
+    required:true,
+    enum:[
+      'Usuario',
+      'Admin'
+    ]
+  }
 });
 
 const Usuario = mongoose.model("usuario", usuarioSchema);
