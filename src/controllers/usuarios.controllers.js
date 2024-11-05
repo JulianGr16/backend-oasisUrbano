@@ -1,32 +1,43 @@
 import Usuario from "../database/model/usuarios.js";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 //CREAR
 export const crearUsuario = async (req, res) => {
   try {
-    //validar si el usuario existe 
-    const {email, password, nombreUsuario} = req.body
-    const usuarioExistente = await Usuario.findOne({email});
-    if(usuarioExistente){
+    // Desestructurar los datos del cuerpo de la solicitud
+    const { correoUsuario, contraseña, nombreCompleto, roll } = req.body;
+
+    // Validar si el usuario existe
+    const usuarioExistente = await Usuario.findOne({ correoUsuario });
+    if (usuarioExistente) {
       return res
-      .status(400)
-      .json({mensaje: "este correo ya se encuentra registrado"})
+        .status(400)
+        .json({ mensaje: "Este correo ya se encuentra registrado" });
     }
-    //crear el nuevo usuario
-    const nuevoUsuario = new Usuario(req.body);
-    //hashear y encriptar el password
-    const saltos = bcrypt.genSaltSync(10)
-    nuevoUsuario.password = bcrypt.hashSync(password, saltos)
-    nuevoUsuario.save()
-    //enviar respuesta de confirmacion
-    res.status(201).json({mensaje: "el usuario fue creado correctamente"})
+
+    // Crear el nuevo usuario con rol "Usuario" por defecto
+    const nuevoUsuario = new Usuario({
+      correoUsuario,
+      contraseña, // Aún no se ha hasheado aquí
+      nombreCompleto,
+      roll, // Asigna el rol "Usuario" por defecto
+    });
+
+    // Hashear y encriptar la contraseña
+    const saltos = bcrypt.genSaltSync(10);
+    nuevoUsuario.contraseña = bcrypt.hashSync(contraseña, saltos);
+
+    // Guardar el nuevo usuario en la base de datos (esperar a que se complete)
+    await nuevoUsuario.save();
+
+    // Enviar respuesta de confirmación
+    res.status(201).json({ mensaje: "El usuario fue creado correctamente" });
   } catch (error) {
     console.error(error);
     res
       .status(400)
-      .json({ mensaje: "Ocurrio un error, no se pudo crear el usuario" });
+      .json({ mensaje: "Ocurrió un error, no se pudo crear el usuario" });
   }
 };
-
 //LEER
 export const listarUsuarios = async (req, res) => {
   try {
@@ -91,24 +102,30 @@ export const obtenerUsuario = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) =>{
+export const Login = async (req, res) => {
   try {
-    const {email} = req.body;
-    const usuarioExistente = await User.findOne({email});
-    if(!usuarioExistente){
+    const { correoUsuario } = req.body;
+    const usuarioExistente = await User.findOne({ correoUsuario });
+    if (!usuarioExistente) {
       return res
-      .status(400)
-      .json({mensaje: "Correo o contraseña incorrecta!"});
+        .status(400)
+        .json({ mensaje: "Correo o contraseña incorrecta!" });
     }
-        // generar un token
-        const token = await generarJWT(usuarioExistente._id, usuarioExistente.email)
-        // respodemos afirmativamente
-        res.status(200).json({
-          mensaje: 'Los datos del usuario son validos',
-          token,
-          id: usuarioExistente._id
-        })
-    
+    // generar un token
+    const token = await generarJWT(
+      usuarioExistente._id,
+      usuarioExistente.correoUsuario
+    );
+
+    // Respondemos afirmativamente
+    res.status(200).json({
+      mensaje: "Los datos del usuario son válidos",
+      token,
+      id: usuarioExistente._id,
+      uid: usuarioExistente._id,
+      nombre: usuarioExistente.nombreUsuario,
+      roll: usuarioExistente.roll, // Asegúrate de que este campo esté en tu modelo
+    });
   } catch (error) {
     {
       res
@@ -116,4 +133,4 @@ export const Login = async (req, res) =>{
         .json({ mensaje: "Ocurrio un error al intentar logearse!" });
     }
   }
-}
+};

@@ -15,8 +15,8 @@ const usuarioSchema = new mongoose.Schema({
   contraseña: {
     type: String,
     required: true,
-    minLength: 6,
-    maxLength: 50,
+    minLength: 8, // Cambié el mínimo a 8 para que coincida con la validación
+    maxLength: 100, // Aumenté el máximo a 100 para permitir hashes de bcrypt
     validate: {
       validator: function (contraseña) {
         return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(contraseña);
@@ -36,13 +36,10 @@ const usuarioSchema = new mongoose.Schema({
     },
   },
   roll: {
-    type:String,
-    required:true,
-    enum:[
-      'Usuario',
-      'Admin'
-    ]
-  }
+    type: String,
+    required: true,
+    enum: ["Usuario", "Admin"],
+  },
 });
 
 const Usuario = mongoose.model("usuario", usuarioSchema);
